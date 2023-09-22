@@ -18,12 +18,13 @@ pipeline {
                     }
                 }
             }
-          stage('Terraform Init & Apply') {
+         
+        }
+     stage('Terraform Init & Apply') {
               steps {
                   sh "terraform init"
                   sh "terraform apply -auto-approve"
               }
           }
-        }
     }
 }
