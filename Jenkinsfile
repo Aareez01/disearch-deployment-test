@@ -14,7 +14,8 @@ pipeline {
  //                       sh "cat \$disearchrd" 
  // Example command to read the secret file
                        // sh "export TF_VAR_projectName=$disearchrd"
-                        env.TF_VAR_projectName = $disearchrd
+                        def projectName = readfile("$disearchrd").project_id
+                        env.TF_VAR_projectName = projectName
       
                     }
                 }
