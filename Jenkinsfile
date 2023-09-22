@@ -14,11 +14,16 @@ pipeline {
  //                       sh "cat \$disearchrd" 
  // Example command to read the secret file
                         sh "export TF_VAR_project_name=$disearchrd"
-                        sh "terraform init"
-                        sh "terraform apply -auto-approve"
+      
                     }
                 }
             }
+          stage {
+              steps {
+                  sh "terraform init"
+                  sh "terraform apply -auto-approve"
+              }
+          }
         }
     }
 }
