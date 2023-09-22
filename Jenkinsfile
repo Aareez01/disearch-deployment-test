@@ -13,7 +13,8 @@ pipeline {
                         // You can now use the SECRET_FILE variable to refer to the secret file
  //                       sh "cat \$disearchrd" 
  // Example command to read the secret file
-                        sh "export TF_VAR_projectName=$disearchrd"
+                       // sh "export TF_VAR_projectName=$disearchrd"
+                        env.TF_VAR_projectName = $disearchrd
       
                     }
                 }
