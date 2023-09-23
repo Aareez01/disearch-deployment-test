@@ -22,7 +22,7 @@ pipeline {
 
         stage('Parse Credentials') {
             steps {
-                sh 'echo "Command Output: $SECRET_FILE_CONTENT"'
+                echo env.SECRET_FILE_CONTENT
             }
         }
     }
