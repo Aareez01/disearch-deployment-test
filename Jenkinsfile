@@ -19,7 +19,7 @@ pipeline {
                     // }
 
                     sh 'ls -l /creds'
-                    sh 'cat /creds/\$secretFileCredentialId'
+                    sh 'cat /creds/\$secretFileCredentialId.json'
 
                     // Use the withCredentials step to access the secret file
                     // withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
