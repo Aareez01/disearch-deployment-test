@@ -12,7 +12,7 @@ pipeline {
                     withCredentials([file(credentialsId: "disearchrd", variable: 'SECRET_FILE')]) {
                         
                         // Execute a shell command and capture its output
-                        def secretFileCont = sh(script: 'cat \$SECRET_FILE', returnStdout: true).trim()
+                        def secretFileCont = sh(script: 'cat $SECRET_FILE', returnStdout: true).trim()
 
                         env.SECRET_FILE_CONTENT = secretFileCont
                     }
@@ -22,7 +22,7 @@ pipeline {
 
         stage('Parse Credentials') {
             steps {
-                echo env.SECRET_FILE_CONTENT
+                echo "Secret File Content: ${env.SECRET_FILE_CONTENT}"
             }
         }
     }
