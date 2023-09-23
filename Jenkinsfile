@@ -18,14 +18,15 @@ pipeline {
                         // Read the content of the secret file into a variable
                         def secretFileContent = readFile("$SECRET_FILE")
                         
-                        // Print the content without Jenkins masking it
-                        echo secretFileContent
-                        
-                        // You can also parse it as JSON if needed
-                        def credentialsFile = readJSON text: secretFileContent
-                        def firstKey = credentialsFile.keySet().iterator().next()
-                        echo firstKey
                     }
+                    // Print the content without Jenkins masking it
+                    echo secretFileContent
+                    
+                    // You can also parse it as JSON if needed
+                    def credentialsFile = readJSON text: secretFileContent
+                    def firstKey = credentialsFile.keySet().iterator().next()
+                    echo firstKey
+                    
                     // sh 'terraform init -var="projectName=$secret"'
                     // sh 'terraform apply -var="projectName=$secret" -auto-approve'
                 }
