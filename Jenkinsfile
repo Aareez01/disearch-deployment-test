@@ -5,10 +5,6 @@ pipeline {
         SECRET_FILE_CONTENT = ''
     }
 
-    plugins {
-        envInject()
-    }
-
     stages {
         stage('getCred') {
             steps {
