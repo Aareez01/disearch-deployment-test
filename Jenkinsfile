@@ -22,13 +22,13 @@ pipeline {
                     def secretFilePath = credentials(secretFileCredentialId).getFile()
 
                     // You can now use the secretFilePath variable to refer to the secret file
-                    def jsonContent = readJSON file: secretFilePath
+                    // def jsonContent = readJSON file: secretFilePath
                     
                     // Extract the 'project_id' value from the JSON
-                    def projectId = jsonContent.project_id
+                    // def projectId = jsonContent.project_id
                     
                     // You can now use projectId in your Jenkins pipeline
-                    echo "Project ID: $projectId"
+                    echo "Project ID: $secretFilePath"
 
                     // Use the withCredentials step to access the secret file
                     // withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
