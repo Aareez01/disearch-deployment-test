@@ -1,6 +1,6 @@
 variable "projectName" {
   type    = string
-  default = var.TF_VAR_projectName
+  default = "${var.projectName}"
 }
 
 output "project" {
