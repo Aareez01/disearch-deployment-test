@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        TF_VAR_projectName = "helloWorld"
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -15,6 +11,10 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
+                // Set Terraform environment variables
+                script {
+                    env.TF_VAR_projectName = "helloWorld"
+                }
                 // Run terraform init
                 sh 'terraform init'
             }
