@@ -20,13 +20,16 @@ pipeline {
                     withCredentials([file(credentialsId: env.projectID, variable: 'SECRET_FILE')]) {
                         // Inject the secret file content into a new environment variable
                         // sh "ls -l \$SECRET_FILE"
-                        sh 'cat \$SECRET_FILE'
+                        // sh 'cat \$SECRET_FILE'
                         // Execute a shell command and capture its output
-                        // def commandOutput = sh(script: 'echo "Hello, World!"', returnStdout: true).trim()
                         def secretFileContent = sh(script: 'cat \$SECRET_FILE', returnStdout: true).trim()
+
+                        // Parse the command output as a JSON object
+                        def jsonObject = readJSON text: secretFileContent
                         
                         // Print the captured output
                         echo "Output from the shell command: $secretFileContent"
+                        echo "projectID: ${jsonObject.project_id}"
 
                     }
                     
