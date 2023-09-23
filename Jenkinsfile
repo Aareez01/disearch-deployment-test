@@ -17,13 +17,16 @@ pipeline {
         stage('getCred') {
             steps {
                 withCredentials([file(credentialsId: 'disearchrd', variable: 'credFile')]) {
-                    def credentials = new JsonSlurper().parseText(file('credFile'))
-                    def password = credentials['type']['value']
-    
-                    echo "Password: ${password}"
+                    script {
+                        def credentials = new JsonSlurper().parseText(file('credFile'))
+                        def password = credentials['type']['value']
+        
+                        echo "Password: ${password}"
+                    }
                 }
             }
         }
+        
         stage('Terraform Init') {
             steps {
                 // Run terraform init with environment variables
