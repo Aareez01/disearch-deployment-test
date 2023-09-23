@@ -1,34 +1,25 @@
 pipeline {
     agent any
-    environment {
-      GOOGLE_APPLICATION_CREDENTIALS = credentials('disearchrd')
-    }
+
     stages {
         stage('Example') {
             steps {
                 script {
-                    sh "cat $disearchrd"
                     // Define the credentials ID for the secret file
-                  //  def secretFileCredentialId = 'disearchrd'
-               
-                    // Use the withCredentials step to access the secret file
-                  //  withCredentials([file(credentialsId: secretFileCredentialId, variable: 'disearchrd')]) {
-                        // You can now use the SECRET_FILE variable to refer to the secret file
+                    def secretFileCredentialId = 'disearchrd'
 
-                       // sh "export TF_VAR_projectName=$disearchrd"
-                      //  def projectName = readfile("$disearchrd").project_id
-                       // env.TF_VAR_projectName = projectName
-      
+                    // Use the withCredentials step to access the secret file
+                    withCredentials([file(credentialsId: secretFileCredentialId, variable: 'disearchrdFile')]) {
+                        // Set the Terraform variable using the content of the secret file
+                        def projectName = readFile("$disearchrdFile").trim()
+                        env.TF_VAR_projectName = projectName
+
+                        // Run Terraform
+                        sh "terraform init"
+                        sh "terraform apply -auto-approve"
                     }
                 }
             }
-         
         }
-     stage('Terraform Init & Apply') {
-              steps {
-                  sh "terraform init"
-                  sh "terraform apply -auto-approve"
-              }
-          }
     }
 }
