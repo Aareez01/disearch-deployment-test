@@ -15,10 +15,10 @@ pipeline {
                     withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
                         // Inject the secret file content into a new environment variable
                         env.SECRET_FILE_CONTENT = readFile("$SECRET_FILE")
+                        sh 'echo \$SECRET_FILE > /creds/$secretFileCredentialId.json'
                     }
 
-                    sh 'pwd'
-                    sh 'ls -l /'
+                    sh 'ls -l /creds'
 
                     // Use the withCredentials step to access the secret file
                     // withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
