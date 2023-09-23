@@ -1,5 +1,3 @@
-import groovy.json.*
-
 pipeline {
     agent any
     environment {
@@ -17,13 +15,13 @@ pipeline {
         stage('getCred') {
             steps {
                 script {
+                    // Define the credentials ID for the secret file
                     def secretFileCredentialId = 'disearchrd'
-                    
-                    withCredentials([file(credentialsId: 'secretFileCredentialId', variable: 'credFile')]) {
-                        def credentials = new JsonSlurper().parseText(file('credFile'))
-                        def password = credentials['type']['value']
-        
-                        echo "Password: ${password}"
+
+                    // Use the withCredentials step to access the secret file
+                    withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
+                        // You can now use the SECRET_FILE variable to refer to the secret file
+                        sh "cat \$SECRET_FILE" // Example command to read the secret file
                     }
                 }
             }
