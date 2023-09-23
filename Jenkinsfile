@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         projectID = 'disearchrd'
+        secretFileContent = ''
     }
 
     stages {
@@ -22,17 +23,18 @@ pipeline {
                         // sh "ls -l \$SECRET_FILE"
                         // sh 'cat \$SECRET_FILE'
                         // Execute a shell command and capture its output
-                        def secretFileContent = sh(script: 'cat \$SECRET_FILE', returnStdout: true).trim()
+                        env.secretFileContent = sh(script: 'cat \$SECRET_FILE', returnStdout: true).trim()
 
                         // Print the captured output
-                        echo "Output from the shell command: $secretFileContent"
+                        // echo "Output from the shell command: $secretFileContent"
                         
                         // Parse the command output as a JSON object
-                        def jsonObject = readJSON text: secretFileContent
+                        // def jsonObject = readJSON text: secretFileContent
                         
-                        echo "projectID: ${jsonObject.project_id}"
-
+                        // echo "projectID: ${jsonObject.project_id}"
                     }
+
+                    echo "Credentials files = ${env.secretFileContent}"
                     
                     // sh 'ls -l /creds'
                     // sh 'ls -l /creds/\$secretFileCredentialId'
