@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SECRET_FILE_CONTENT = ''
+        projectID = 'disearchrd'
     }
 
     stages {
@@ -10,12 +10,11 @@ pipeline {
             steps {
                 script {
                     // Define the credentials ID for the secret file
-                    def secretFileCredentialId = 'disearchrd'
+                    def secretFileCredentialId = env.projectID
                     
                     withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
                         // Inject the secret file content into a new environment variable
-                        env.SECRET_FILE_CONTENT = readFile("$SECRET_FILE")
-                        sh 'echo \$SECRET_FILE > /creds/$secretFileCredentialId.json'
+                        sh 'echo \$SECRET_FILE > /creds/\$secretFileCredentialId.json'
                     }
 
                     sh 'ls -l /creds'
