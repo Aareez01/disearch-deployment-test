@@ -12,13 +12,14 @@ pipeline {
                     // Define the credentials ID for the secret file
                     def secretFileCredentialId = env.projectID
                     
-                    withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
+                    // withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
                         // Inject the secret file content into a new environment variable
-                        sh "ls -l \$SECRET_FILE"
-                        sh 'cat \$SECRET_FILE > /creds/\$secretFileCredentialId.json'
-                    }
+                        // sh "ls -l \$SECRET_FILE"
+                        // sh 'cat \$SECRET_FILE'
+                    // }
 
                     sh 'ls -l /creds'
+                    sh 'cat /cres/\$env.projectID'
 
                     // Use the withCredentials step to access the secret file
                     // withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
