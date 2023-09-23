@@ -23,19 +23,14 @@ pipeline {
                         // You can now use the SECRET_FILE variable to refer to the secret file
                         // sh "cat \$SECRET_FILE" // Example command to read the secret file
 
-                        // Read the secret file into a string
-                        def credFileContents = readFile(SECRET_FILE)
-
-                        // Parse the JSON string into a Python object
-                        import json
-                        credFile = json.loads(credFileContents)
-        
-                        // Get the value of the `project_id` key
-                        projectId = credFile["project_id"]
-        
-                        // Print the value of `project_id`
-                        //println(projectId)
-                        sh "cat \$projectId"
+                        // You can now use the SECRET_FILE variable to refer to the secret file
+                        def jsonContent = readJSON file: "$SECRET_FILE"
+                        
+                        // Extract the 'project_id' value from the JSON
+                        def projectId = jsonContent.project_id
+                
+                        // You can now use projectId in your Jenkins pipeline
+                        echo "Project ID: $projectId"
                     }
                 }
             }
