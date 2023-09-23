@@ -1,4 +1,4 @@
-pipeline {
+.pipeline {
     agent any
 
     environment {
@@ -17,7 +17,7 @@ pipeline {
                     // sh "ls -l \${credentials}"
                     // sh "cat \${credentials}"
                     
-                    withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
+                    withCredentials([file(credentialsId: env.projectID, variable: 'SECRET_FILE')]) {
                         // Inject the secret file content into a new environment variable
                         // sh "ls -l \$SECRET_FILE"
                         sh 'cat \$SECRET_FILE'
