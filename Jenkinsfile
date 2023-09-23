@@ -11,12 +11,13 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                // Set Terraform environment variables
                 script {
+                    // Set Terraform environment variables
                     env.TF_VAR_projectName = "helloWorld"
+                    
+                    // Run terraform init with environment variables
+                    sh 'terraform init'
                 }
-                // Run terraform init
-                sh 'terraform init'
             }
         }
 
