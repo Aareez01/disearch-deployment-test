@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        EXAMPLE_CREDS = credentials('disearchrd')
+    }
 
     stages {
         stage('Checkout') {
@@ -9,11 +12,11 @@ pipeline {
             }
         }
 
-        stage('Fetch and Parse JSON') {
+        stage('getCred') {
             steps {
                 withCredentials([file(credentialsId: 'disearchrd', variable: 'JSON_FILE')]) {
                     script {
-                        def jsonContent = readFile "${JSON_FILE}"
+                        def jsonContent = readFile file: "${JSON_FILE}"
                         def json = readJSON text: jsonContent
 
                         // Now you can work with the parsed JSON data.
