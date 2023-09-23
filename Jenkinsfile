@@ -4,7 +4,7 @@ pipeline {
     agent any
 
     environment {
-        SECRET_FILE_CONTENT = ''
+        SECRET_FILE = ''
     }
 
     stages {
@@ -16,18 +16,20 @@ pipeline {
 
                     // Use the withCredentials step to access the secret file
                     withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
-                    //     You can now use the SECRET_FILE variable to refer to the secret file
-                    //     sh "cat \$SECRET_FILE" // Example command to read the secret file
+                        env.SECRET_FILE = readFile("$SECRET_FILE")
+                        echo env.SECRET_FILE
+                        // You can now use the SECRET_FILE variable to refer to the secret file
+                        // sh "cat \$SECRET_FILE" // Example command to read the secret file
 
                         // Read the content of the secret file into a variable
-                        def SECRET_FILE_CONTENT = readFile("$SECRET_FILE").trim()
+                        // def SECRET_FILE_CONTENT = readFile("$SECRET_FILE").trim()
 
                         // Assign the content to an environment variable
-                        env.SECRET_FILE_CONTENT = secretFileContent
+                        // env.SECRET_FILE_CONTENT = secretFileContent
                         
                         // Print the content without Jenkins masking it
-                        echo secretFileContent
-                        echo env.SECRET_FILE_CONTENT
+                        // echo secretFileContent
+                        // echo env.SECRET_FILE_CONTENT
                     }
                     // Print the content without Jenkins masking it
                     // echo env.SECRET_FILE_CONTENT
