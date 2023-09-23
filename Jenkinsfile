@@ -24,11 +24,12 @@ pipeline {
                         // Execute a shell command and capture its output
                         def secretFileContent = sh(script: 'cat \$SECRET_FILE', returnStdout: true).trim()
 
+                        // Print the captured output
+                        echo "Output from the shell command: $secretFileContent"
+                        
                         // Parse the command output as a JSON object
                         def jsonObject = readJSON text: secretFileContent
                         
-                        // Print the captured output
-                        echo "Output from the shell command: $secretFileContent"
                         echo "projectID: ${jsonObject.project_id}"
 
                     }
