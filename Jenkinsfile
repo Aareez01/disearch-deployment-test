@@ -15,7 +15,7 @@ pipeline {
                     //     You can now use the SECRET_FILE variable to refer to the secret file
                     //     sh "cat \$SECRET_FILE" // Example command to read the secret file
                         maskPasswords('') {
-                            def credentialsFile = readJSON file: '$SECRET_FILE'
+                            def credentialsFile = readJSON fromFile('$SECRET_FILE')
                             def firstKey = credentialsFile.keySet().iterator().next()
                             echo firstKey
                         }
