@@ -1,3 +1,5 @@
+import groovy.json.*
+
 pipeline {
     agent any
 
@@ -6,16 +8,18 @@ pipeline {
             steps {
                 script {
                     // Define the credentials ID for the secret file
-                    def secretFileCredentialId = 'disearchrd'
+                    // def secretFileCredentialId = 'disearchrd'
 
                     // Use the withCredentials step to access the secret file
                     withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
-                        // You can now use the SECRET_FILE variable to refer to the secret file
-                        // sh "cat \$SECRET_FILE" // Example command to read the secret file
-                        def secret = 'sh "cat \$SECRET_FILE"'
-                        sh 'terraform init -var="projectName=$secret"'
-                        sh 'terraform apply -var="projectName=$secret" -auto-approve'
+                    //     You can now use the SECRET_FILE variable to refer to the secret file
+                    //     sh "cat \$SECRET_FILE" // Example command to read the secret file
+                        def credentialsFile = readJSON fromFile('$SECRET_FILE')
+                        def firstKey = credentialsFile.keySet().iterator().next()
+                        echo firstKey
                     }
+                    // sh 'terraform init -var="projectName=$secret"'
+                    // sh 'terraform apply -var="projectName=$secret" -auto-approve'
                 }
             }
         }
