@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        EXAMPLE_CREDS = credentials('disearchrd')
-    }
 
     stages {
         stage('getCred') {
