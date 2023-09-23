@@ -10,18 +10,25 @@ pipeline {
             steps {
                 script {
                     // Define the credentials ID for the secret file
-                    def credentials = "/creds/${env.projectID}/secret.json"
+                    // def credentials = "/creds/${env.projectID}/secret.json"
 
-                    sh 'cat /creds/$projectID/secret.json'
+                    // sh 'cat /creds/$projectID/secret.json'
 
                     // sh "ls -l \${credentials}"
                     // sh "cat \${credentials}"
                     
-                    // withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
+                    withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
                         // Inject the secret file content into a new environment variable
                         // sh "ls -l \$SECRET_FILE"
-                        // sh 'cat \$SECRET_FILE'
-                    // }
+                        sh 'cat \$SECRET_FILE'
+                        // Execute a shell command and capture its output
+                        // def commandOutput = sh(script: 'echo "Hello, World!"', returnStdout: true).trim()
+                        def secretFileContent = sh(script: 'cat \$SECRET_FILE', returnStdout: true).trim()
+                        
+                        // Print the captured output
+                        echo "Output from the shell command: $secretFileContent"
+
+                    }
                     
                     // sh 'ls -l /creds'
                     // sh 'ls -l /creds/\$secretFileCredentialId'
