@@ -12,7 +12,7 @@ pipeline {
                     withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
                         // You can now use the SECRET_FILE variable to refer to the secret file
                         // sh "cat \$SECRET_FILE" // Example command to read the secret file
-                        def secret = 'cat \$SECRET_FILE'
+                        def secret = 'sh "cat \$SECRET_FILE"'
                         sh 'terraform init -var="projectName=$secret"'
                         sh 'terraform apply -var="projectName=$secret" -auto-approve'
                     }
