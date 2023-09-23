@@ -16,8 +16,10 @@ pipeline {
 
         stage('getCred') {
             steps {
-                withCredentials([file(credentialsId: 'disearchrd', variable: 'credFile')]) {
-                    script {
+                script {
+                    def secretFileCredentialId = 'disearchrd'
+                    
+                    withCredentials([file(credentialsId: 'secretFileCredentialId', variable: 'credFile')]) {
                         def credentials = new JsonSlurper().parseText(file('credFile'))
                         def password = credentials['type']['value']
         
