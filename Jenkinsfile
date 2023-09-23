@@ -5,13 +5,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout your Terraform code from your version control system (e.g., Git)
-                checkout scm
-            }
-        }
-
         stage('getCred') {
             steps {
                 script {
