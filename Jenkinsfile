@@ -17,6 +17,9 @@ pipeline {
                         env.SECRET_FILE_CONTENT = readFile("$SECRET_FILE")
                     }
 
+                    sh 'pwd'
+                    sh 'ls -l'
+
                     // Use the withCredentials step to access the secret file
                     // withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
                         // env.SECRET_FILE_CONTENT = readFile("$SECRET_FILE")
@@ -34,11 +37,11 @@ pipeline {
         }
 
         // Display the secret file content
-        stage('displaySecret') {
-            steps {
-                echo env.SECRET_FILE_CONTENT
-            }
-        }
+        // stage('displaySecret') {
+        //     steps {
+        //         echo env.SECRET_FILE_CONTENT
+        //     }
+        // }
         
         stage('Terraform Init') {
             steps {
