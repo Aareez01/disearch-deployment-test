@@ -10,17 +10,16 @@ pipeline {
             steps {
                 script {
                     // Define the credentials ID for the secret file
-                    def credPath = "/creds/${env.projectID}/secret.json"
+                    def credentials = "/creds/${env.projectID}/secret.json"
+
+                    sh 'll -l \$credentials'
                     
                     // withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
                         // Inject the secret file content into a new environment variable
                         // sh "ls -l \$SECRET_FILE"
                         // sh 'cat \$SECRET_FILE'
                     // }
-
-                    echo credPath
-                    echo $credPath
-
+                    
                     // sh 'ls -l /creds'
                     // sh 'ls -l /creds/\$secretFileCredentialId'
                     // sh 'cat /creds/\$secretFileCredentialId/secret.json'
