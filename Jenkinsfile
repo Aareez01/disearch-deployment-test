@@ -15,7 +15,8 @@ pipeline {
                     // Use the withCredentials step to access the secret file
                     withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
                         env.SECRET_FILE_CONTENT = readFile("$SECRET_FILE")
-                        echo "$env.SECRET_FILE_CONTENT"
+                        println env.SECRET_FILE_CONTENT
+                        // echo "$env.SECRET_FILE_CONTENT"
                         
                         // You can now use the SECRET_FILE variable to refer to the secret file
                         // sh "cat \$SECRET_FILE" // Example command to read the secret file
