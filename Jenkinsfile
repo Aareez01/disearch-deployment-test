@@ -12,7 +12,7 @@ pipeline {
                     // Define the credentials ID for the secret file
                     def credentials = "/creds/${env.projectID}/secret.json"
 
-                    sh 'echo $projectID'
+                    sh 'cat /creds/$projectID/secret.json'
 
                     // sh "ls -l \${credentials}"
                     // sh "cat \${credentials}"
