@@ -9,9 +9,10 @@ pipeline {
         stage('Get Credentials') {
             steps {
                 script {
-                    sh "cat /creds/${env.projectID}/secret.json"
                     def secretFileContent = sh(script: "cat /creds/${env.projectID}/secret.json", returnStdout: true).trim()
                     echo "Credentials files = $secretFileContent"
+                    def jsonObject = readJSON text: secretFileContent
+                    echo "projectID: ${jsonObject.project_id}"
                 }
             }
         }
