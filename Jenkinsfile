@@ -20,7 +20,7 @@ pipeline {
                     //     sh "cat \$SECRET_FILE" // Example command to read the secret file
 
                         // Read the content of the secret file into a variable
-                        def env.SECRET_FILE_CONTENT = readFile("$SECRET_FILE")
+                        env.SECRET_FILE_CONTENT = readFile(file: 'SECRET_FILE').trim()
                         
                     }
                     // Print the content without Jenkins masking it
