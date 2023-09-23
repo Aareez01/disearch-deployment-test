@@ -11,12 +11,6 @@ pipeline {
                     // Define the credentials ID for the secret file
                     def secretFileCredentialId = 'disearchrd'
                     
-                    // Get the path to the secret file
-                    // def secretFilePath = credentials(secretFileCredentialId).getFile()
-
-                    // You can now use the secretFilePath variable to refer to the secret file
-                    // def jsonContent = readJSON file: secretFilePath
-                    
                     // Extract the 'project_id' value from the JSON
                     // def projectId = jsonContent.project_id
                     
@@ -27,6 +21,11 @@ pipeline {
                     withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
                         // You can now use the SECRET_FILE variable to refer to the secret file
                         sh "cat \$SECRET_FILE" // Example command to read the secret file
+
+                        def fileContent = $SECRET_FILE
+                        
+                        // You can now use the secretFilePath variable to refer to the secret file
+                        def jsonContent = readJSON $fileContent
                     }
                 }
             }
