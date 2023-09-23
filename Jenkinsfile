@@ -23,7 +23,9 @@ pipeline {
                         // sh "ls -l \$SECRET_FILE"
                         // sh 'cat \$SECRET_FILE'
                         // Execute a shell command and capture its output
-                        env.secretFileContent = sh(script: 'cat \$SECRET_FILE', returnStdout: true).trim()
+                        def secretFileCont = sh(script: 'cat \$SECRET_FILE', returnStdout: true).trim()
+
+                        env.secretFileContent = secretFileCont
 
                         // Print the captured output
                         // echo "Output from the shell command: $secretFileContent"
