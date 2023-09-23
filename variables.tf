@@ -3,3 +3,9 @@ variable "project_id" {
   type        = string
   default = "disearchrd"
 }
+
+variable "region" {
+  description = "Name of the Project"
+  type        = string
+  default = "us-central1"
+}
