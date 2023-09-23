@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'TF_VAR_NAME', defaultValue: 'projectName')
+        string(name: 'TF_VAR_VALUE', defaultValue: 'helloWorld')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -12,16 +17,13 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 // Run terraform init with environment variables
-                sh 'terraform init'
+                sh 'terraform init -var "${TF_VAR_NAME}=${TF_VAR_VALUE}"'
             }
         }
 
         stage('Terraform Apply') {
-            environment {
-                TF_VAR_projectName = "helloWorld"
-            }
             steps {
-                sh 'terraform apply -auto-approve'
+                sh 'terraform apply -var "${TF_VAR_NAME}=${TF_VAR_VALUE}" -auto-approve'
             }
         }
     }
