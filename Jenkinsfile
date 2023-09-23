@@ -16,8 +16,10 @@ pipeline {
 
                     // Use the withCredentials step to access the secret file
                     withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
-                        env.SECRET_FILE = readFile("$SECRET_FILE").trim()
-                        echo env.SECRET_FILE
+                        maskPasswords('') {
+                            env.SECRET_FILE = readFile("$SECRET_FILE")
+                            echo env.SECRET_FILE
+                        }
                         // You can now use the SECRET_FILE variable to refer to the secret file
                         // sh "cat \$SECRET_FILE" // Example command to read the secret file
 
