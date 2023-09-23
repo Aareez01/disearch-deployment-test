@@ -9,7 +9,7 @@ pipeline {
             steps {
                 script {
                     // Define the credentials ID for the secret file
-                    // def secretFileCredentialId = 'disearchrd'
+                    def secretFileCredentialId = 'disearchrd'
                     
                     // Get the path to the secret file
                     // def secretFilePath = credentials(secretFileCredentialId).getFile()
