@@ -1,24 +1,29 @@
 pipeline {
     agent any
 
+    environment {
+        TF_VAR_projectName = "helloWorld"
+    }
+
     stages {
-        stage('Example') {
+        stage('Checkout') {
             steps {
-                script {
-                    // Define the credentials ID for the secret file
-                    def secretFileCredentialId = 'disearchrd'
+                // Checkout your Terraform code from your version control system (e.g., Git)
+                checkout scm
+            }
+        }
 
-                    // Use the withCredentials step to access the secret file
-                    withCredentials([file(credentialsId: secretFileCredentialId, variable: 'disearchrdFile')]) {
-                        // Set the Terraform variable using the content of the secret file
-                        def projectName = readFile("$disearchrdFile").trim()
-                        env.TF_VAR_projectName = projectName
+        stage('Terraform Init') {
+            steps {
+                // Run terraform init
+                sh 'terraform init'
+            }
+        }
 
-                        // Run Terraform
-                        sh "terraform init"
-                        sh "terraform apply -auto-approve"
-                    }
-                }
+        stage('Terraform Apply') {
+            steps {
+                // Run terraform apply
+                sh 'terraform apply -auto-approve'
             }
         }
     }
