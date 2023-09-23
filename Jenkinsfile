@@ -11,19 +11,16 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                script {
-                    // Set Terraform environment variables
-                    env.TF_VAR_projectName = "helloWorld"
-                    
-                    // Run terraform init with environment variables
-                    sh 'terraform init'
-                }
+                // Run terraform init with environment variables
+                sh 'terraform init'
             }
         }
 
         stage('Terraform Apply') {
+            environment {
+                TF_VAR_projectName = "helloWorld"
+            }
             steps {
-                // Run terraform apply
                 sh 'terraform apply -auto-approve'
             }
         }
