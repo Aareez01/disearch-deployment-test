@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     // Define the credentials ID for the secret file
-                    // def secretFileCredentialId = 'disearchrd'
+                    def secretFileCredentialId = 'disearchrd'
 
                     // Use the withCredentials step to access the secret file
                     withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
