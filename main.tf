@@ -1,13 +1,6 @@
-provider "google" {
-  credentials = file(var.google_credentials_file)
-  project    = var.project_id
-  region     = var.region
-}
-
 variable "projectName" {
-  description = "Name of the Project"
-  type        = string
-  sensitive   = true
+  type    = string
+  default = var.TF_VAR_projectName
 }
 
 output "project" {
