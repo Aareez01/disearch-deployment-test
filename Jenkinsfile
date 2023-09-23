@@ -14,9 +14,11 @@ pipeline {
                     withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
                     //     You can now use the SECRET_FILE variable to refer to the secret file
                     //     sh "cat \$SECRET_FILE" // Example command to read the secret file
-                        def credentialsFile = readJSON fromFile('$SECRET_FILE')
-                        def firstKey = credentialsFile.keySet().iterator().next()
-                        echo firstKey
+                        maskPasswords('') {
+                            def credentialsFile = readJSON file: '$SECRET_FILE'
+                            def firstKey = credentialsFile.keySet().iterator().next()
+                            echo firstKey
+                        }
                     }
                     // sh 'terraform init -var="projectName=$secret"'
                     // sh 'terraform apply -var="projectName=$secret" -auto-approve'
