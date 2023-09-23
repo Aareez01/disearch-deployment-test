@@ -1,21 +1,22 @@
 pipeline {
     agent any
-
+    environment {
+      GOOGLE_APPLICATION_CREDENTIALS = credentials('disearchrd')
+    }
     stages {
         stage('Example') {
             steps {
                 script {
                     // Define the credentials ID for the secret file
-                    def secretFileCredentialId = 'disearchrd'
+                  //  def secretFileCredentialId = 'disearchrd'
 
                     // Use the withCredentials step to access the secret file
-                    withCredentials([file(credentialsId: secretFileCredentialId, variable: 'disearchrd')]) {
+                  //  withCredentials([file(credentialsId: secretFileCredentialId, variable: 'disearchrd')]) {
                         // You can now use the SECRET_FILE variable to refer to the secret file
- //                       sh "cat \$disearchrd" 
- // Example command to read the secret file
+
                        // sh "export TF_VAR_projectName=$disearchrd"
-                        def projectName = readfile("$disearchrd").project_id
-                        env.TF_VAR_projectName = projectName
+                      //  def projectName = readfile("$disearchrd").project_id
+                       // env.TF_VAR_projectName = projectName
       
                     }
                 }
