@@ -12,7 +12,8 @@ pipeline {
                     withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
                         // You can now use the SECRET_FILE variable to refer to the secret file
                         // sh "cat \$SECRET_FILE" // Example command to read the secret file
-                        sh "cat \$SECRET_FILE | jq -r '.project_id'" // Example command to read the secret file
+                        sh 'terraform init -var="projectName=$SECRET_FILE"'
+                        sh 'terraform apply -var="projectName=$SECRET_FILE" -auto-approve'
                     }
                 }
             }
@@ -20,14 +21,16 @@ pipeline {
         
         stage('Terraform Init') {
             steps {
+                echo 'Terraform Init'
                 // Run terraform init with environment variables
-                sh 'terraform init -var="projectName=helloWorld"'
+                // sh 'terraform init -var="projectName=helloWorld"'
             }
         }
 
         stage('Terraform Apply') {
             steps {
-                sh 'terraform apply -var="projectName=helloWorld" -auto-approve'
+                echo 'Terraform Apply'
+                // sh 'terraform apply -var="projectName=helloWorld" -auto-approve'
             }
         }
     }
