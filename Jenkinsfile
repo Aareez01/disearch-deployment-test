@@ -19,7 +19,7 @@ pipeline {
                     def secretFileCredentialId = 'disearchrd'
 
                     // Use the withCredentials step to access the secret file
-                    withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE')]) {
+                    withCredentials([file(credentialsId: secretFileCredentialId, variable: 'SECRET_FILE'),[$class: 'FileBinding', key: 'SECRET_FILE', maskPasswords: false]]) {
                         // You can now use the SECRET_FILE variable to refer to the secret file
                         // sh "cat \$SECRET_FILE" // Example command to read the secret file
 
