@@ -1,7 +1,11 @@
-import groovy.json.*
+// import groovy.json.*
 
 pipeline {
     agent any
+
+    environment {
+        SECRET_FILE_CONTENT = ''
+    }
 
     stages {
         stage('getCred') {
@@ -16,16 +20,16 @@ pipeline {
                     //     sh "cat \$SECRET_FILE" // Example command to read the secret file
 
                         // Read the content of the secret file into a variable
-                        def secretFileContent = readFile("$SECRET_FILE")
+                        def env.SECRET_FILE_CONTENT = readFile("$SECRET_FILE")
                         
                     }
                     // Print the content without Jenkins masking it
-                    echo secretFileContent
+                    echo env.SECRET_FILE_CONTENT
                     
                     // You can also parse it as JSON if needed
-                    def credentialsFile = readJSON text: secretFileContent
-                    def firstKey = credentialsFile.keySet().iterator().next()
-                    echo firstKey
+                    // def credentialsFile = readJSON text: secretFileContent
+                    // def firstKey = credentialsFile.keySet().iterator().next()
+                    // echo firstKey
                     
                     // sh 'terraform init -var="projectName=$secret"'
                     // sh 'terraform apply -var="projectName=$secret" -auto-approve'
